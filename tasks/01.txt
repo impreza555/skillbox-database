@@ -1,0 +1,15 @@
+Практическое задание
+
+1. вывести ФИО сотрудников в столбце full_name
+2. вывести Email сотрудников, которые живут на улице "Вторая"
+3. вывести 3 самых молодых сотрудника, которые устроились на работу в 2019 году
+4. вывести количество уникальных сотрудников, которые получили премии свыше 50 тыс. руб.
+5. вывести количество сотрудников, которые устроились на работу за последние 3 месяца
+
+Рекомендуемые решения
+
+1. select *, (first_name || ' ' || last_name || ' ' || patronymic_name) as full_name from employee;
+2. select email from profile where address like "%Вторая%";
+3. select * from profile where strftime('%Y', work_start_date) = '2019' order by age limit 3;
+4. select count(distinct employee_id) from bonus where value > 50000;
+5. select count(employee_id) from profile where work_start_date > date('now', '-3 months');

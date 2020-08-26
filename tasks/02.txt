@@ -1,0 +1,19 @@
+Практическое задание
+
+1. вывести динамический столбик в таблице payments с текстом “Выплачено” или “Не выплачено”, если дата платежа уже прошла
+2. вывести email сотрудников, в которых фамилия начинается и заканчивается буквой “a”
+3. вывести в двух столбцах информацию по максимальной и средней премии за 2019-й год
+4. вывести в двух столбцах адрес и количество сотрудников, которые там проживают (количество сотрудников должно быть больше 3х)
+5. вывести в двух столбцах название отдела и количество сотрудников, которые там работают
+
+Рекомендуемые решения
+
+1. select *, case when processing_date < date('now') then 'выплачено' else 'не выплачено' end paid from payment;
+2. select email from profile where email like "_.a%a@%";
+3. select max(value), avg(value) from bonus where strftime("%Y", processing_date) = "2019";
+4. select address, count(employee_id) from profile group by address;
+5. select department.name, count(employee.id)
+from department
+join job on job.department_id = department.id
+join employee on employee.job_id = job.id
+group by department_id;
