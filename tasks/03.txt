@@ -1,0 +1,32 @@
+Практическое задание
+
+1. создать таблицу “Тип премии” (bonus_type), с указанием полей: ключ (id), наименование (name), множитель (modifier)
+2. создать новую таблицу “Премии” (bonus_new), добавив новый столбец с внешним ключом на “Тип премии” (bonus_type_id)
+3. добавить новую запись в таблицу “Тип премии” (bonus_type) с наименованием “Ежемесячная премия” и множителем 0.5
+4. скопировать все старые записи из таблицы “Премии” (bonus), добавив ссылку на новый “Тип премии” (bonus_type)
+5. удалить старую таблицу “Премии” (bonus)
+
+Рекомендуемые решения
+
+1. CREATE TABLE "bonus_type" (
+	"id"	INTEGER NOT NULL,
+	"name"	TEXT NOT NULL,
+	"modifier"	NUMERIC NOT NULL DEFAULT 1.0,
+	PRIMARY KEY("id" AUTOINCREMENT)
+   );
+2. CREATE TABLE "bonus_new" (
+	"id"	INTEGER NOT NULL,
+	"value"	NUMERIC(10,2) NOT NULL DEFAULT 0.0,
+	"description"	TEXT,
+	"processing_date"	TEXT NOT NULL,
+	"employee_id"	INTEGER NOT NULL,
+	"bonus_type_id"	INTEGER NOT NULL,
+	FOREIGN KEY("bonus_type_id") REFERENCES "bonus_type"("id"),
+	FOREIGN KEY("employee_id") REFERENCES "employee"("id"),
+	PRIMARY KEY("id" AUTOINCREMENT)
+   );
+3. insert into bonus_type (name, modifier) values ('Ежемесячная премия', 0.5);
+4. insert into bonus_new (value, description, processing_date, employee_id, bonus_type_id)
+   select value, description, processing_date, employee_id, 1 as bonus_type_id
+   from bonus;
+5. drop table bonus; alter table bonus_new rename to bonus;

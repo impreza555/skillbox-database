@@ -11,7 +11,7 @@
 1. select *, case when processing_date < date('now') then 'выплачено' else 'не выплачено' end paid from payment;
 2. select email from profile where email like "_.a%a@%";
 3. select max(value), avg(value) from bonus where strftime("%Y", processing_date) = "2019";
-4. select address, count(employee_id) from profile group by address;
+4. select address, count(employee_id) as emp_count from profile group by address having emp_count > 3;
 5. select department.name, count(employee.id)
 from department
 join job on job.department_id = department.id
